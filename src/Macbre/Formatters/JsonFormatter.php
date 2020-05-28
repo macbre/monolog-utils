@@ -16,7 +16,7 @@ class JsonFormatter extends \Monolog\Formatter\JsonFormatter {
 	 * @param array $record
 	 * @return string formatted record
 	 */
-	public function format(array $record) {
+	public function format(array $record): string {
 		$entry = [
 			'@timestamp' => self::now(),
 			'@message' => $record['message'],
