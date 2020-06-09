@@ -19,12 +19,12 @@ class JsonFormatter extends \Monolog\Formatter\JsonFormatter {
 	public function format(array $record): string {
 		$entry = [
 			'@timestamp' => self::now(),
-			'@message' => $record['message'],
-			'@context' => (object) $record['context'],
-			'@fields' => (object) $record['extra'],
+			'message' => $record['message'],
+			'context' => (object) $record['context'],
+			'fields' => (object) $record['extra'],
 			'severity' => strtolower($record['level_name']),
 			'program' => $record['channel'],
-			'@source_host' => gethostname(),
+			'source_host' => gethostname(),
 		];
 
 		return parent::format($entry);
