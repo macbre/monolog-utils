@@ -1,4 +1,7 @@
-# monolog-utils
+monolog-utils
+[![Latest Stable Version](http://poser.pugx.org/macbre/monolog-utils/v)](https://packagist.org/packages/macbre/monolog-utils)
+===============
+
 Addiitonal formatters and processors for Monolog
 
 ## `ExceptionProcessor`
