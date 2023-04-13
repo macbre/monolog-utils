@@ -1,8 +1,8 @@
 {
     "name": "macbre/monolog-utils",
-    "description": "Addiitonal formatters and processors for Monolog",
+    "description": "Additional formatters and processors for Monolog",
     "keywords": ["log", "logging"],
-    "homepage": "http://github.com/macbre/monolog-utils",
+    "homepage": "https://github.com/macbre/monolog-utils",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -12,7 +12,8 @@
         }
     ],
     "require": {
-        "monolog/monolog": "*"
+        "monolog/monolog": "^3.3",
+        "php": "^7.4 || 8.x"
     },
     "autoload": {
         "psr-4": {
