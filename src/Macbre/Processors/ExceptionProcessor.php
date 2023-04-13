@@ -2,6 +2,9 @@
 
 namespace Macbre\Logger\Processors;
 
+use Monolog\LogRecord;
+use Monolog\Processor\ProcessorInterface;
+
 /**
  * Formats the 'exception' field passed in $context when logging errors
  *
@@ -11,12 +14,12 @@ namespace Macbre\Logger\Processors;
  *   'exception' => $e
  * ]);
  */
-class ExceptionProcessor {
+class ExceptionProcessor implements ProcessorInterface {
 	/**
-	 * @param  array $record
+	 * @param  LogRecord|array $record
 	 * @return array
 	 */
-	public function __invoke(array $record) {
+	public function __invoke(LogRecord $record): array {
 		if (!empty($record['context']['exception']) && $record['context']['exception'] instanceof \Exception) {
 			/* @var \Exception $exception */
 			$exception = $record['context']['exception'];
