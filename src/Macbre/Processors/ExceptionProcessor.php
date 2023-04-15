@@ -21,10 +21,9 @@ class ExceptionProcessor implements ProcessorInterface {
 	 */
 	public function __invoke(LogRecord $record): LogRecord {
 		$recordContext = $record['context'];
+		$exception = $recordContext['exception'] ?? null;
 
-		if ($recordContext['exception'] instanceof \Exception) {
-			$exception = $recordContext['exception'];
-
+		if ($exception instanceof \Exception) {
 			// build a new entry for the exception
 			$recordContext['exception'] = [
 				'class' => get_class($exception),
