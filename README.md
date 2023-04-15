@@ -2,7 +2,7 @@ monolog-utils
 [![Latest Stable Version](http://poser.pugx.org/macbre/monolog-utils/v)](https://packagist.org/packages/macbre/monolog-utils)
 ===============
 
-Additional formatters and processors for Monolog
+Additional formatters and processors for Monolog 3.x. This package requires PHP 8.1+.
 
 ## `ExceptionProcessor`
 
