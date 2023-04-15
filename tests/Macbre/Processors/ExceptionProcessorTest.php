@@ -40,4 +40,16 @@ class ExceptionProcessorTest extends TestCase
 		$this->assertEquals(self::EX_MESSAGE, $res['context']['exception']['message']);
 		$this->assertEquals(self::EX_CODE, $res['context']['exception']['code']);
 	}
+
+	public function testSkipsWhenThereIsNoException() {
+		$record = self::getLogRecord(
+			message: 'All went fine'
+		);
+
+		$instance = new ExceptionProcessor();
+		$res = $instance->__invoke($record);
+
+		$this->assertInstanceOf(LogRecord::class, $res);
+		$this->assertEquals('All went fine', $res->message);
+	}
 }
