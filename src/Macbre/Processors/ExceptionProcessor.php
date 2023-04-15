@@ -16,15 +16,17 @@ use Monolog\Processor\ProcessorInterface;
  */
 class ExceptionProcessor implements ProcessorInterface {
 	/**
-	 * @param  LogRecord|array $record
-	 * @return array
+	 * @param  LogRecord $record
+	 * @return LogRecord
 	 */
-	public function __invoke(LogRecord $record): array {
-		if (!empty($record['context']['exception']) && $record['context']['exception'] instanceof \Exception) {
-			/* @var \Exception $exception */
-			$exception = $record['context']['exception'];
+	public function __invoke(LogRecord $record): LogRecord {
+		$recordContext = $record['context'];
 
-			$record['context']['exception'] = [
+		if ($recordContext['exception'] instanceof \Exception) {
+			$exception = $recordContext['exception'];
+
+			// build a new entry for the exception
+			$recordContext['exception'] = [
 				'class' => get_class($exception),
 				'message' => $exception->getMessage(),
 				'code'  => $exception->getCode(),
@@ -37,6 +39,17 @@ class ExceptionProcessor implements ProcessorInterface {
 					}
 				}, $exception->getTrace())
 			];
+
+			// and now replace the record
+			$record = new LogRecord(
+				datetime: $record->datetime,
+				channel: $record->channel,
+				level: $record->level,
+				message: $record->message,
+				context: $recordContext,
+				extra: $record->extra,
+				formatted: $record->formatted,
+			);
 		}
 
 		return $record;
