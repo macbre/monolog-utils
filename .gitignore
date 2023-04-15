@@ -3,3 +3,4 @@ vendor/
 
 *.swp
 .phpunit.cache
+.phpunit.result.cache
