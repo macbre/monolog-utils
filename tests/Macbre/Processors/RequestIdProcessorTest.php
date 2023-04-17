@@ -10,7 +10,7 @@ use Macbre\Tests\TestCase;
  */
 class RequestIdProcessorTest extends TestCase
 {
-	public function testFormatsTheException() {
+	public function testAddsTheRequestId() {
 		$record = self::getLogRecord(
 			message: 'Hi',
 			extra: [

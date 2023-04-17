@@ -1,0 +1,49 @@
+name: php
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - '8.1'
+          - '8.2'
+          - '8.3'
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: "Install PHP"
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: "${{ matrix.php-version }}"
+      env:
+        fail-fast: true
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v3
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-v${{ matrix.php-version }}-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
+
+    - name: Run test suite
+      run: composer run-script test

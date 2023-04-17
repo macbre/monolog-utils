@@ -27,10 +27,10 @@ class RequestIdProcessor implements ProcessorInterface {
 	}
 
 	/**
-	 * @param LogRecord|array $record
-	 * @return array
+	 * @param LogRecord $record
+	 * @return LogRecord
 	 */
-	public function __invoke(LogRecord $record) {
+	public function __invoke(LogRecord $record): LogRecord {
 		$record['extra']['request_id'] = self::getRequestId();
 		return $record;
 	}
