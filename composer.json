@@ -22,7 +22,7 @@
         }
     },
     "scripts": {
-        "test": "phpunit"
+        "test": "XDEBUG_MODE=coverage phpunit --coverage-text --coverage-html _coverage"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.0"
