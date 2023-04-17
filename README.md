@@ -2,11 +2,11 @@ monolog-utils
 [![Latest Stable Version](http://poser.pugx.org/macbre/monolog-utils/v)](https://packagist.org/packages/macbre/monolog-utils)
 ===============
 
-Addiitonal formatters and processors for Monolog
+Additional formatters and processors for Monolog 3.x. This package requires PHP 8.1+.
 
 ## `ExceptionProcessor`
 
-Allows you to pass an `Exception` instance as a part of `$context` - it will be automically expanded to log exception class, message, code and a backtrace
+Allows you to pass an `Exception` instance as a part of `$context` - it will be automatically expanded to log exception class, message, code and a backtrace
 
 ```php
 try {

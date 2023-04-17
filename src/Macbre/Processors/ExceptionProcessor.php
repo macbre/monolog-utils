@@ -2,6 +2,9 @@
 
 namespace Macbre\Logger\Processors;
 
+use Monolog\LogRecord;
+use Monolog\Processor\ProcessorInterface;
+
 /**
  * Formats the 'exception' field passed in $context when logging errors
  *
@@ -11,17 +14,18 @@ namespace Macbre\Logger\Processors;
  *   'exception' => $e
  * ]);
  */
-class ExceptionProcessor {
+class ExceptionProcessor implements ProcessorInterface {
 	/**
-	 * @param  array $record
-	 * @return array
+	 * @param  LogRecord $record
+	 * @return LogRecord
 	 */
-	public function __invoke(array $record) {
-		if (!empty($record['context']['exception']) && $record['context']['exception'] instanceof \Exception) {
-			/* @var \Exception $exception */
-			$exception = $record['context']['exception'];
+	public function __invoke(LogRecord $record): LogRecord {
+		$recordContext = $record['context'];
+		$exception = $recordContext['exception'] ?? null;
 
-			$record['context']['exception'] = [
+		if ($exception instanceof \Exception) {
+			// build a new entry for the exception
+			$recordContext['exception'] = [
 				'class' => get_class($exception),
 				'message' => $exception->getMessage(),
 				'code'  => $exception->getCode(),
@@ -34,6 +38,17 @@ class ExceptionProcessor {
 					}
 				}, $exception->getTrace())
 			];
+
+			// and now replace the record
+			$record = new LogRecord(
+				datetime: $record->datetime,
+				channel: $record->channel,
+				level: $record->level,
+				message: $record->message,
+				context: $recordContext,
+				extra: $record->extra,
+				formatted: $record->formatted,
+			);
 		}
 
 		return $record;

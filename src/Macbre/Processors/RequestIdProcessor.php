@@ -2,12 +2,14 @@
 
 namespace Macbre\Logger\Processors;
 
+use Monolog\LogRecord;
+use Monolog\Processor\ProcessorInterface;
+
 /**
  * Injects a unique per-request ID into extra fields of Monolog-generated log entry
  */
-class RequestIdProcessor {
-	/* @var string */
-	static private $requestId = null;
+class RequestIdProcessor implements ProcessorInterface {
+	static private ?string $requestId = null;
 
 	/**
 	 * Get per-request unique ID
@@ -16,7 +18,7 @@ class RequestIdProcessor {
 	 *
 	 * @return string
 	 */
-	public static function getRequestId() {
+	public static function getRequestId(): string {
 		if (self::$requestId === null) {
 			self::$requestId = uniqid('', true);
 		}
@@ -25,10 +27,10 @@ class RequestIdProcessor {
 	}
 
 	/**
-	 * @param  array $record
+	 * @param LogRecord|array $record
 	 * @return array
 	 */
-	public function __invoke(array $record) {
+	public function __invoke(LogRecord $record) {
 		$record['extra']['request_id'] = self::getRequestId();
 		return $record;
 	}
