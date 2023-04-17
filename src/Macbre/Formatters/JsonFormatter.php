@@ -5,7 +5,10 @@ namespace Macbre\Logger\Formatters;
 use Monolog\LogRecord;
 
 /**
- * Custom Nano JSON formatter
+ * Custom logs JSON formatter.
+ *
+ * Adds some extra data to the JSON:
+ *  - source_host
  */
 class JsonFormatter extends \Monolog\Formatter\JsonFormatter {
 
@@ -15,21 +18,25 @@ class JsonFormatter extends \Monolog\Formatter\JsonFormatter {
 	const DATE_FORMAT = 'Y-m-d\TH:i:s.uP';
 
 	/**
-	 * @param LogRecord|array $record
-	 * @return string formatted record
+	 * @param LogRecord $record
+	 * @return string the JSON-formatted record
 	 */
 	public function format(LogRecord $record): string {
+		$normalized = $this->normalizeRecord($record);
+
+		unset($normalized['datetime']);
+		unset($normalized['level']);
+		unset($normalized['level_name']);
+
 		$entry = [
 			'@timestamp' => self::now(),
-			'message' => $record['message'],
-			'context' => (object) $record['context'],
-			'fields' => (object) $record['extra'],
 			'severity' => strtolower($record['level_name']),
-			'program' => $record['channel'],
 			'source_host' => gethostname(),
 		];
 
-		return parent::format($entry);
+		$normalized = array_merge($normalized, $entry);
+
+		return $this->toJson($normalized, true) . ($this->appendNewline ? "\n" : '');
 	}
 
 	/**
