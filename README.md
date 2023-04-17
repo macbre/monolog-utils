@@ -1,6 +1,8 @@
 monolog-utils
-[![Latest Stable Version](http://poser.pugx.org/macbre/monolog-utils/v)](https://packagist.org/packages/macbre/monolog-utils)
 ===============
+
+[![Latest Stable Version](http://poser.pugx.org/macbre/monolog-utils/v)](https://packagist.org/packages/macbre/monolog-utils)
+[![Coverage Status](https://coveralls.io/repos/github/macbre/monolog-utils/badge.svg?branch=master)](https://coveralls.io/github/macbre/monolog-utils?branch=master)
 
 Additional formatters and processors for Monolog 3.x. This package requires PHP 8.1+.
 
