@@ -9,6 +9,9 @@ use Macbre\Tests\TestCase;
  */
 class JsonFormatterTest extends TestCase
 {
+	/**
+	 * @throws \JsonException
+	 */
 	public function testFormatsTheLogEntry() {
 		$record = self::getLogRecord(
 			message: 'Foo bar',
@@ -25,7 +28,7 @@ class JsonFormatterTest extends TestCase
 
 		$parsed = json_decode($formatted, associative: true, flags: JSON_THROW_ON_ERROR);
 
-		$this->assertArrayHasKey('@timestamp', $parsed);
+		$this->assertEquals('2023-04-18T08:25:23.123456+00:00', $parsed['@timestamp']);
 		$this->assertEquals($record->message, $parsed['message']);
 		$this->assertEquals('info', $parsed['severity']);
 		$this->assertEquals($record['context'], $parsed['context']);
@@ -36,4 +39,12 @@ class JsonFormatterTest extends TestCase
 
 function gethostname(): string {
 	return 'test.foo.net';
+}
+
+function date(string $_format): string {
+	return "2023-04-18T08:25:23.000000+00:00";
+}
+
+function microtime(): float {
+	return 1681806383.123456;
 }
