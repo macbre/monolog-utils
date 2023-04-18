@@ -31,6 +31,7 @@ class JsonFormatterTest extends TestCase
 		$this->assertEquals('2023-04-18T08:25:23.123456+00:00', $parsed['@timestamp']);
 		$this->assertEquals($record->message, $parsed['message']);
 		$this->assertEquals('info', $parsed['severity']);
+		$this->assertEquals($record->channel, $parsed['channel']);
 		$this->assertEquals($record['context'], $parsed['context']);
 		$this->assertEquals($record['extra'], $parsed['extra']);
 		$this->assertEquals('test.foo.net', $parsed['source_host']);

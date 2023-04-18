@@ -25,7 +25,7 @@ catch (NastyException $ex) {
 
 ```json
 {
-	"@context": {
+	"context": {
 		"exception": {
 			"class": "NastyException",
 			"message": "Things went wrong",
@@ -58,17 +58,17 @@ $logger->error('Foo Bar', [
 
 ```json
 {
-	"@timestamp": "2015-12-12T12:28:03.010299+01:00",
-	"@message": "Foo Bar",
-	"@context": {
+	"@timestamp": "2023-04-18T08:25:23.123456+00:00",
+	"message": "Foo Bar",
+	"context": {
 		"size": 42
 	},
-	"@fields": {
+	"extra": {
 		"request_id": "566c04c2f22693.59900054"
 	},
 	"severity": "error",
-	"program": "my.app",
-	"@source_host": "my.server.net"
+	"channel": "my.app",
+	"source_host": "my.server.net"
 }
 ```
 
